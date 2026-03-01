@@ -10,7 +10,7 @@ import json
 from datetime import datetime, timedelta
 
 class SAEAPITester:
-    def __init__(self, base_url="https://sysbqawd-ykdz-8001.preview.emergentagent.com"):
+    def __init__(self, base_url="http://localhost:8001"):
         self.base_url = base_url
         self.token = None
         self.tests_run = 0

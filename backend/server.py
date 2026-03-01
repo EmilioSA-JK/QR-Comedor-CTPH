@@ -423,7 +423,7 @@ async def generar_reporte_pdf(data: ReporteRequest, current_admin: dict = Depend
     
     elements = []
     
-    elements.append(Paragraph("Sistema de Asistencia Escolar", title_style))
+    elements.append(Paragraph("SystemQr - CTPH", title_style))
     elements.append(Paragraph(f"Reporte de Asistencia: {data.fecha_inicio} al {data.fecha_fin}", subtitle_style))
     elements.append(Spacer(1, 10))
     

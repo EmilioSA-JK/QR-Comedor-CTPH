@@ -16,7 +16,7 @@ const API_URL = process.env.REACT_APP_BACKEND_URL || '';
 // API Helper
 const api = {
   async fetch(endpoint, options = {}) {
-    const token = localStorage.getItem('sae_token');
+    const token = localStorage.getItem('ctph_token');
     const headers = {
       'Content-Type': 'application/json',
       ...(token && { Authorization: `Bearer ${token}` }),

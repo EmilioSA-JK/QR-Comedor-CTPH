@@ -1,7 +1,7 @@
-# Sistema de Asistencia Escolar (SAE) - PRD
+# SystemQr - CTPH - PRD
 
 ## Descripción General
-Sistema local para PC que gestiona la asistencia de estudiantes mediante códigos QR. Cada estudiante tiene un código QR único basado en su cédula que al escanearse registra automáticamente su asistencia.
+Sistema local para PC (SystemQr) que gestiona la asistencia de estudiantes mediante códigos QR para CTPH. Cada estudiante tiene un código QR único basado en su cédula que al escanearse registra automáticamente su asistencia.
 
 ## Fecha de Creación
 2026-03-01

@@ -148,7 +148,7 @@ function Sidebar({ activeView, setActiveView, onLogout, user }) {
         {!collapsed && (
           <div className="sidebar-logo">
             <QrCode size={28} />
-            <span>SAE</span>
+            <span>CTPH</span>
           </div>
         )}
       </div>

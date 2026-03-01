@@ -504,7 +504,7 @@ async def obtener_estadisticas(current_admin: dict = Depends(get_current_admin))
 
 @app.get("/api/health")
 async def health_check():
-    return {"status": "ok", "service": "SAE API", "timestamp": datetime.now(timezone.utc).isoformat()}
+    return {"status": "ok", "service": "CTPH SystemQr API", "timestamp": datetime.now(timezone.utc).isoformat()}
 
 
 if __name__ == "__main__":

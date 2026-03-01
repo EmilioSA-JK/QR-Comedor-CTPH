@@ -61,8 +61,8 @@ function Login({ onLogin }) {
     setLoading(true);
     try {
       const data = await api.post('/api/auth/login', { usuario, password });
-      localStorage.setItem('sae_token', data.token);
-      localStorage.setItem('sae_user', JSON.stringify({ usuario: data.usuario, nombre: data.nombre }));
+      localStorage.setItem('ctph_token', data.token);
+      localStorage.setItem('ctph_user', JSON.stringify({ usuario: data.usuario, nombre: data.nombre }));
       onLogin(data);
       toast.success('¡Bienvenido!');
     } catch (error) {

@@ -66,7 +66,7 @@ async def lifespan(app: FastAPI):
 
 
 app = FastAPI(
-    title="SAE - Sistema de Asistencia Escolar",
+    title="CTPH - SystemQr",
     description="API para gestión de asistencia escolar mediante códigos QR",
     version="1.0.0",
     lifespan=lifespan

@@ -1154,8 +1154,8 @@ function App() {
   };
 
   const handleLogout = () => {
-    localStorage.removeItem('sae_token');
-    localStorage.removeItem('sae_user');
+    localStorage.removeItem('ctph_token');
+    localStorage.removeItem('ctph_user');
     setIsAuthenticated(false);
     setUser(null);
     toast.success('Sesión cerrada');

@@ -84,10 +84,10 @@ function Login({ onLogin }) {
         <div className="login-form-wrapper">
           <div className="login-logo">
             <QrCode size={48} />
-            <span>SAE</span>
+            <span>CTPH</span>
           </div>
           <h2>Iniciar Sesión</h2>
-          <p className="login-subtitle">Ingresa tus credenciales de administrador</p>
+          <p className="login-subtitle">SystemQr - Ingresa tus credenciales</p>
           
           <form onSubmit={handleSubmit} className="login-form">
             <div className="form-group">

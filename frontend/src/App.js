@@ -1138,8 +1138,8 @@ function App() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const token = localStorage.getItem('sae_token');
-    const savedUser = localStorage.getItem('sae_user');
+    const token = localStorage.getItem('ctph_token');
+    const savedUser = localStorage.getItem('ctph_user');
     
     if (token && savedUser) {
       setIsAuthenticated(true);

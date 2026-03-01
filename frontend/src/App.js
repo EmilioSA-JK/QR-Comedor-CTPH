@@ -76,8 +76,8 @@ function Login({ onLogin }) {
     <div className="login-container" data-testid="login-container">
       <div className="login-image">
         <div className="login-image-overlay">
-          <h1>Sistema de Asistencia Escolar</h1>
-          <p>Control de asistencia mediante códigos QR</p>
+          <h1>SystemQr</h1>
+          <p>Control de asistencia mediante códigos QR - CTPH</p>
         </div>
       </div>
       <div className="login-form-container">

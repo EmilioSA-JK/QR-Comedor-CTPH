@@ -6,6 +6,9 @@ import os
 import io
 import base64
 from datetime import datetime, timedelta, timezone
+
+# Zona horaria de Costa Rica (UTC-6)
+COSTA_RICA_TZ = timezone(timedelta(hours=-6))
 from typing import Optional, List
 from contextlib import asynccontextmanager
 
@@ -210,6 +213,34 @@ async def get_me(current_admin: dict = Depends(get_current_admin)):
     return current_admin
 
 
+@app.get("/api/administradores")
+async def listar_administradores(current_admin: dict = Depends(get_current_admin)):
+    cursor = db.administradores.find({}, {"_id": 0, "password": 0})
+    admins = await cursor.to_list(length=100)
+    for admin in admins:
+        if "creado" in admin and admin["creado"]:
+            admin["creado"] = admin["creado"].isoformat() if isinstance(admin["creado"], datetime) else str(admin["creado"])
+    return admins
+
+
+@app.delete("/api/administradores/{usuario}")
+async def eliminar_administrador(usuario: str, current_admin: dict = Depends(get_current_admin)):
+    # No permitir eliminar el propio usuario
+    if current_admin["usuario"] == usuario:
+        raise HTTPException(status_code=400, detail="No puedes eliminar tu propia cuenta")
+    
+    # Verificar que haya al menos otro administrador
+    count = await db.administradores.count_documents({})
+    if count <= 1:
+        raise HTTPException(status_code=400, detail="Debe existir al menos un administrador")
+    
+    result = await db.administradores.delete_one({"usuario": usuario})
+    if result.deleted_count == 0:
+        raise HTTPException(status_code=404, detail="Administrador no encontrado")
+    
+    return {"message": "Administrador eliminado exitosamente"}
+
+
 # ==================== ESTUDIANTES ROUTES ====================
 
 @app.get("/api/estudiantes", response_model=List[EstudianteResponse])
@@ -322,7 +353,7 @@ async def crear_registro(data: RegistroCreate, current_admin: dict = Depends(get
     if not estudiante:
         raise HTTPException(status_code=404, detail="Estudiante no encontrado")
     
-    now = datetime.now(timezone.utc)
+    now = datetime.now(COSTA_RICA_TZ)
     
     registro = {
         "cedula": data.cedula,
@@ -379,7 +410,7 @@ async def listar_registros(
 
 @app.get("/api/registros/hoy")
 async def registros_hoy(current_admin: dict = Depends(get_current_admin)):
-    hoy = datetime.now(timezone.utc).strftime("%Y-%m-%d")
+    hoy = datetime.now(COSTA_RICA_TZ).strftime("%Y-%m-%d")
     cursor = db.registros.find({"fecha": hoy}, {"_id": 0, "timestamp": 0}).sort("timestamp", -1)
     registros = await cursor.to_list(length=500)
     

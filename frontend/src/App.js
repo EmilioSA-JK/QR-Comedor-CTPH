@@ -1032,9 +1032,25 @@ function Reportes() {
 
 // Admin Component
 function AdminManagement() {
+  const [admins, setAdmins] = useState([]);
   const [showModal, setShowModal] = useState(false);
   const [formData, setFormData] = useState({ usuario: '', password: '', nombre: '' });
-  const [loading, setLoading] = useState(false);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    loadAdmins();
+  }, []);
+
+  const loadAdmins = async () => {
+    try {
+      const data = await api.get('/api/administradores');
+      setAdmins(data);
+    } catch (error) {
+      toast.error('Error al cargar administradores');
+    } finally {
+      setLoading(false);
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -1044,10 +1060,22 @@ function AdminManagement() {
       toast.success('Administrador registrado exitosamente');
       setShowModal(false);
       setFormData({ usuario: '', password: '', nombre: '' });
+      loadAdmins();
     } catch (error) {
       toast.error(error.message);
     } finally {
       setLoading(false);
+    }
+  };
+
+  const handleDelete = async (usuario) => {
+    if (!window.confirm(`¿Está seguro de eliminar al administrador "${usuario}"?`)) return;
+    try {
+      await api.delete(`/api/administradores/${usuario}`);
+      toast.success('Administrador eliminado');
+      loadAdmins();
+    } catch (error) {
+      toast.error(error.message);
     }
   };
 
@@ -1063,19 +1091,41 @@ function AdminManagement() {
         </button>
       </div>
 
-      <div className="admin-info-card">
-        <div className="info-icon">
-          <Settings size={48} />
+      {loading ? (
+        <div className="loading-container"><Loader2 className="spin" size={40} /></div>
+      ) : (
+        <div className="table-container">
+          <table className="data-table" data-testid="admins-table">
+            <thead>
+              <tr>
+                <th>Usuario</th>
+                <th>Nombre</th>
+                <th>Fecha de Creación</th>
+                <th>Acciones</th>
+              </tr>
+            </thead>
+            <tbody>
+              {admins.map((admin) => (
+                <tr key={admin.usuario}>
+                  <td className="font-mono">{admin.usuario}</td>
+                  <td>{admin.nombre}</td>
+                  <td>{admin.creado ? new Date(admin.creado).toLocaleDateString('es-CR') : 'N/A'}</td>
+                  <td>
+                    <button 
+                      className="btn-icon danger" 
+                      onClick={() => handleDelete(admin.usuario)} 
+                      title="Eliminar"
+                      data-testid={`delete-admin-${admin.usuario}`}
+                    >
+                      <Trash2 size={18} />
+                    </button>
+                  </td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
         </div>
-        <h2>Registro de Administradores</h2>
-        <p>
-          Solo los administradores autenticados pueden registrar nuevos usuarios administradores.
-          El usuario inicial es <code>admin</code> con contraseña <code>admin123</code>.
-        </p>
-        <p className="warning">
-          <AlertCircle size={16} /> Se recomienda cambiar la contraseña del administrador inicial.
-        </p>
-      </div>
+      )}
 
       {showModal && (
         <div className="modal-overlay" onClick={() => setShowModal(false)}>

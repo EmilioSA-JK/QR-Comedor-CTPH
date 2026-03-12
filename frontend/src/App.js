@@ -49,18 +49,26 @@ const api = {
 // API sin autenticación para el escáner
 const publicApi = {
   async post(endpoint, data) {
-    const response = await fetch(`${API_URL}${endpoint}`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(data)
-    });
+    try {
+      const response = await fetch(`${API_URL}${endpoint}`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(data)
+      });
 
-    if (!response.ok) {
-      const error = await response.json().catch(() => ({ detail: 'Error de conexión' }));
-      throw new Error(error.detail || 'Error en la solicitud');
+      const result = await response.json();
+      
+      if (!response.ok) {
+        throw new Error(result.detail || 'Error en la solicitud');
+      }
+
+      return result;
+    } catch (error) {
+      if (error.message === 'Failed to fetch') {
+        throw new Error('Error de conexión con el servidor');
+      }
+      throw error;
     }
-
-    return response.json();
   }
 };
 
@@ -1042,12 +1050,8 @@ function App() {
   }, []);
 
   const handleAdminAccess = () => {
-    const token = localStorage.getItem('ctph_token');
-    if (token && user) {
-      setView('admin');
-    } else {
-      setView('login');
-    }
+    // Siempre pedir login al acceder a administración
+    setView('login');
   };
 
   const handleLogin = (data) => {

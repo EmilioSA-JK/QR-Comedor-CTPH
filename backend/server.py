@@ -348,7 +348,8 @@ async def generar_qr(cedula: str, current_admin: dict = Depends(get_current_admi
 # ==================== REGISTROS ROUTES ====================
 
 @app.post("/api/registros")
-async def crear_registro(data: RegistroCreate, current_admin: dict = Depends(get_current_admin)):
+async def crear_registro(data: RegistroCreate):
+    """Endpoint público para registrar asistencia via QR"""
     estudiante = await db.estudiantes.find_one({"cedula": data.cedula}, {"_id": 0})
     if not estudiante:
         raise HTTPException(status_code=404, detail="Estudiante no encontrado")

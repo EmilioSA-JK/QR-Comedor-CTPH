@@ -1,0 +1,115 @@
+{
+  "project_identity": {
+    "name": "Sistema de Asistencia Escolar (SAE)",
+    "description": "Local PC system for student attendance via QR codes.",
+    "emotional_archetype": "The Performance Pro (Light Mode)",
+    "tone": "Efficient, Institutional, Reliable, Technical",
+    "target_audience": "School Administrators"
+  },
+  "design_system": {
+    "theme": "light",
+    "typography": {
+      "headings": {
+        "font_family": "Chivo, sans-serif",
+        "weights": ["400", "700", "900"],
+        "usage": "Use for all page titles, section headers, and modal titles. Tracking-tight (-0.02em)."
+      },
+      "body": {
+        "font_family": "IBM Plex Sans, sans-serif",
+        "weights": ["400", "500", "600"],
+        "usage": "Use for all standard text, inputs, and data tables. Excellent legibility for numbers and codes."
+      },
+      "mono": {
+        "font_family": "JetBrains Mono, monospace",
+        "usage": "Use for Student IDs (Cédula) and QR code alphanumeric representations."
+      }
+    },
+    "colors": {
+      "primary": {
+        "DEFAULT": "#0F172A", 
+        "foreground": "#F8FAFC",
+        "hover": "#1E293B",
+        "description": "Deep Navy / Slate 900. Represents authority and stability."
+      },
+      "secondary": {
+        "DEFAULT": "#F1F5F9",
+        "foreground": "#0F172A",
+        "description": "Slate 100. Used for secondary buttons and backgrounds."
+      },
+      "accent": {
+        "DEFAULT": "#EA580C",
+        "foreground": "#FFFFFF",
+        "description": "Safety Orange. Use sparingly for critical actions (Scan, Alert) or highlights."
+      },
+      "background": "#FFFFFF",
+      "surface": "#F8FAFC",
+      "border": "#E2E8F0",
+      "specialties": {
+        "electromechanics": "#EAB308", 
+        "networks": "#0EA5E9"
+      }
+    },
+    "spacing": {
+      "scale": "Generous. Use p-6 or p-8 for cards. Gap-6 for grids.",
+      "radius": "rounded-sm (2px) or rounded-md (4px). Avoid fully rounded corners to maintain a 'technical' feel."
+    },
+    "shadows": {
+      "card": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
+      "hover": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)"
+    }
+  },
+  "components": {
+    "library": "shadcn/ui",
+    "customization_rules": [
+      "Remove default rounded-xl radii, use rounded-md.",
+      "Input fields: bg-white border-slate-300 focus:border-slate-500 focus:ring-slate-500.",
+      "Buttons: uppercase text-xs tracking-wider font-bold for primary actions.",
+      "Cards: simple borders (border-slate-200), no heavy shadows."
+    ],
+    "specific_components": {
+      "QRScanner": {
+        "description": "Central viewport component. Dark overlay with a transparent square in the center. 'Scan Active' indicator in Green.",
+        "libraries": ["html5-qrcode", "react-qr-code"]
+      },
+      "StudentCard": {
+        "description": "Compact card showing Name, ID, Specialty badge, and Quick Actions (Edit, Delete, QR).",
+        "layout": "Grid or List view toggle."
+      },
+      "Sidebar": {
+        "description": "Fixed left sidebar. Dark Navy background (#0F172A) with white text. Active state: bg-white/10."
+      }
+    }
+  },
+  "layout_strategies": {
+    "dashboard": "Sidebar Layout. Main content area with top bar (breadcrumbs, user profile).",
+    "grid_system": "Responsive grid. Mobile: 1 col. Tablet: 2 cols. Desktop: 3-4 cols for stats/cards.",
+    "container": "Max-width 1600px centered for large screens."
+  },
+  "assets": {
+    "images": [
+      {
+        "category": "auth_background",
+        "url": "https://images.unsplash.com/photo-1555175672-b3a07ff5a80b?crop=entropy&cs=srgb&fm=jpg&ixid=M3w4NjA1ODh8MHwxfHNlYXJjaHwxfHxtb2Rlcm4lMjB0ZWNobmljYWwlMjBzY2hvb2wlMjBidWlsZGluZyUyMGFyY2hpdGVjdHVyZSUyMG1pbmltYWxpc3R8ZW58MHx8fHwxNzcyMzkyNjY0fDA&ixlib=rb-4.1.0&q=85",
+        "description": "Modern technical school building. Use as a side panel image for Login/Register pages."
+      },
+      {
+        "category": "empty_state",
+        "url": "https://images.unsplash.com/photo-1627473380652-65d74bd4adf9?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDQ2NDN8MHwxfHNlYXJjaHwyfHxzdHVkZW50JTIwc3R1ZHlpbmclMjB3aXRoJTIwbGFwdG9wJTIwbWluaW1hbGlzdHxlbnwwfHx8fDE3NzIzOTI2NjR8MA&ixlib=rb-4.1.0&q=85",
+        "description": "Student focused. Use for 'No Students Found' or initial dashboard state."
+      }
+    ],
+    "icons": "Lucide React (default). Use 'Scan', 'Users', 'FileText', 'Settings' icons."
+  },
+  "tech_stack": {
+    "frontend": "React (Vite), Tailwind CSS, React Router, Axios",
+    "backend": "FastAPI, MongoDB (Motor), Pydantic",
+    "tools": ["html5-qrcode (for scanning)", "qrcode.react (for generation)", "jspdf (for reports)"]
+  },
+  "universal_guidelines": [
+    "Always use 'data-testid' for interactive elements.",
+    "Ensure 60fps animations for scanner overlay.",
+    "Forms must have client-side validation (Zod).",
+    "Error states must be clear and descriptive (red border + text).",
+    "Success states should auto-dismiss after 3 seconds (Sonner toast)."
+  ]
+}

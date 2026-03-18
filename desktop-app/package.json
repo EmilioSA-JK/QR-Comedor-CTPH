@@ -1,0 +1,72 @@
+{
+  "name": "systemqr-ctph",
+  "version": "1.0.0",
+  "description": "SystemQr - Control de Asistencia CTPH",
+  "main": "src/main.js",
+  "author": "CTPH",
+  "license": "MIT",
+  "scripts": {
+    "start": "electron .",
+    "build": "npm run build:react && electron-builder",
+    "build:react": "cd ../frontend && npm run build && cp -r build ../desktop-app/react-build",
+    "pack": "electron-builder --dir",
+    "dist": "electron-builder",
+    "dist:win": "electron-builder --win"
+  },
+  "build": {
+    "appId": "com.ctph.systemqr",
+    "productName": "SystemQr CTPH",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets"
+    },
+    "files": [
+      "src/**/*",
+      "react-build/**/*",
+      "backend/**/*",
+      "mongodb/**/*",
+      "node_modules/**/*",
+      "package.json"
+    ],
+    "extraResources": [
+      {
+        "from": "backend",
+        "to": "backend",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "mongodb",
+        "to": "mongodb",
+        "filter": ["**/*"]
+      },
+      {
+        "from": "data",
+        "to": "data",
+        "filter": ["**/*"]
+      }
+    ],
+    "win": {
+      "target": ["nsis"],
+      "icon": "assets/icon.ico"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "installerIcon": "assets/icon.ico",
+      "uninstallerIcon": "assets/icon.ico",
+      "installerHeaderIcon": "assets/icon.ico",
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "shortcutName": "SystemQr CTPH"
+    }
+  },
+  "dependencies": {
+    "electron-is-dev": "^2.0.0",
+    "express": "^4.18.2",
+    "cors": "^2.8.5"
+  },
+  "devDependencies": {
+    "electron": "^28.1.0",
+    "electron-builder": "^24.9.1"
+  }
+}
